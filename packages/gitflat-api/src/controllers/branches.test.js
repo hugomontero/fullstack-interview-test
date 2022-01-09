@@ -22,7 +22,7 @@ describe('branches', () => {
             });
 
             const branches = await branchService.getBranches();
-            expect(repository.getAllBranches).toHaveBeenCalledWith('git_repo_name', 'owner');
+            expect(repository.getAllBranches).toHaveBeenCalledWith('owner', 'git_repo_name');
             expect(branches.length).toBe(1);
         });
 
@@ -34,7 +34,7 @@ describe('branches', () => {
             }catch(_error) {
                 error = _error;
             }
-            expect(repository.getAllBranches).toHaveBeenCalledWith('git_repo_name', 'owner');
+            expect(repository.getAllBranches).toHaveBeenCalledWith('owner', 'git_repo_name');
             expect(error.message).toEqual('Not found');
         });
     });

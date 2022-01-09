@@ -1,10 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const BranchService = require('../controllers/branches');
-const branchRepository = require('../data/branches');
+const BranchRepository = require('../data/branches');
+
+const router = express.Router();
+const axiosInstance = require('../lib/axios');
+const branchRepository = BranchRepository(axiosInstance);
+
 const OWNER = process.env.GIT_OWNER  || 'hugomontero';
 const REPO = process.env.GIT_REPO || 'fullstack-interview-test';
 const branchService = BranchService(branchRepository, OWNER, REPO);
+
 
 router.get('/branches', async (req, res) => {
     try {
@@ -21,7 +26,8 @@ router.get('/branches/:branchName', async (req, res) => {
         const branch = await branchService.getBranchByName(branchName);
         res.send(branch);
     }catch(error){
-        res.status(500).send(error.message);
+        console.log(error.response.status);
+        res.status(error.response.status || 500).send(error.response.data);
     }
 });
 
