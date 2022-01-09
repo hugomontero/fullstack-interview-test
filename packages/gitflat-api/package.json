@@ -28,6 +28,7 @@
     "url": "https://github.com/hugomontero/fullstack-interview-test/issues"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "express": "^4.17.2"
   },
   "devDependencies": {
