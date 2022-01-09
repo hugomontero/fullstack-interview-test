@@ -21,7 +21,8 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "jest --runInBand --color"
   },
   "bugs": {
     "url": "https://github.com/hugomontero/fullstack-interview-test/issues"
