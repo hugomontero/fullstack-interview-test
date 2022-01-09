@@ -1,6 +1,18 @@
 {
+  "version": "independent",
   "packages": [
     "packages/*"
   ],
-  "version": "0.0.0"
+  "command": {
+    "version": {
+      "push": false,
+      "allowBranch": "main",
+      "ignoreChanges": ["*.md"]
+    },
+    "publish": {
+      "allowedBranch": "main",
+      "fromPackage": true,
+      "verifyAccess": false
+    }
+  }
 }

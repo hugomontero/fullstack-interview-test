@@ -1,6 +1,19 @@
 {
-  "name": "root",
+  "name": "gitflat",
+  "description": "gitflat project",
+  "author": "hugo Montero",
   "private": true,
+  "scripts": {
+    "start": "npm run gitflat:start",
+    "postinstall": "lerna bootstrap",
+    "reinstall": "npm run clean && npm run clean:modules && rm -rf ./node_modules && npm install",
+    "clean": "lerna run clean",
+    "clean:build": "lerna clean:build",
+    "clean:modules": "lerna clean --yes",
+    "test": "lerna run gitflat:test",
+    "gitflat:start": "lerna run start --scope=gitflat --stream",
+    "gitflat:test": "lerna run test --scope=gitflat* --stream"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
