@@ -3,13 +3,13 @@ const BranchService = (repository, owner, repo) => {
         return repository.getAllBranches(repo, owner);
     };
     
-    const getBranchById = async(branchName) => {
-        return repository.getBranchById(repo, owner, branchName);
+    const getBranchByName = async(branchName) => {
+        return repository.getBranchByName(repo, owner, branchName);
     };
 
     return { 
         getBranches,
-        getBranchById
+        getBranchByName
     }
 }
 
