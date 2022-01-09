@@ -12,7 +12,9 @@
     "clean:modules": "lerna clean --yes",
     "test": "lerna run gitflat:test",
     "gitflat:start": "lerna run start --scope=gitflat* --stream",
-    "gitflat:test": "lerna run test --scope=gitflat* --stream"
+    "gitflat:test": "lerna run test --scope=gitflat* --stream",
+    "gitflat:api:start": "lerna run start --scope=gitflat-api --stream",
+    "gitflat:api:test": "lerna run test --scope=gitflat-api --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

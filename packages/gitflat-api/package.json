@@ -5,20 +5,23 @@
   "author": "hugo <hugo.montero@outlook.com>",
   "homepage": "https://github.com/hugomontero/fullstack-interview-test#readme",
   "license": "ISC",
-  "main": "lib/gitflat-api.js",
+  "main": "src/index.js",
   "directories": {
     "lib": "lib",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hugomontero/fullstack-interview-test.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "bugs": {
     "url": "https://github.com/hugomontero/fullstack-interview-test/issues"
