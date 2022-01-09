@@ -11,7 +11,7 @@
     "clean:build": "lerna clean:build",
     "clean:modules": "lerna clean --yes",
     "test": "lerna run gitflat:test",
-    "gitflat:start": "lerna run start --scope=gitflat --stream",
+    "gitflat:start": "lerna run start --scope=gitflat* --stream",
     "gitflat:test": "lerna run test --scope=gitflat* --stream"
   },
   "devDependencies": {
