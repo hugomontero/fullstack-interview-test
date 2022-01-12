@@ -28,7 +28,7 @@ const columns = [
     {
         name: 'Close',
         button: true,
-        cell: row => <ActionComponent row={row} onClick={handleClick}>Action</ActionComponent>,
+        cell: row => row.state === 'open'  && <ActionComponent row={row} onClick={closePullRequest}>Action</ActionComponent>,
     }
 ];
 
@@ -47,6 +47,19 @@ const fetchData = async (url, setData, setError) => {
     return null;
   };
 
+const closePullRequest = async(row) => {
+    try{
+        const url = `${API_URL}/pulls/${row.number}/close`
+        const requestOptions = {
+            method: 'PUT'
+        }
+        await fetch(url, requestOptions);
+        return true;
+    }catch(error) {
+        console.log(error);
+    }
+}
+
 const ActionComponent = ({  row, onClick  }) => {
     const clickHandler = () => onClick(row);   
   
@@ -54,9 +67,7 @@ const ActionComponent = ({  row, onClick  }) => {
   };
 
 
-const handleClick = (row) => {
-    console.log(row);
-}
+
 const newPullRequestHandler = (event) => {
     event.view.window.location = `/pull-requests/new`;
 }
