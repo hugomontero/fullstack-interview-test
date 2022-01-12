@@ -1,0 +1,9 @@
+.pull-request-form {
+    align-items: center;
+    text-align: center;
+}
+.pull-request-title {
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+}

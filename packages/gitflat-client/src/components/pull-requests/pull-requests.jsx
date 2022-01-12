@@ -1,47 +1,73 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-
+import Button from '@mui/material/Button';
 import './pull-requests.css'
 
 const columns = [
     {
-        name: 'Branch Name',
-        selector: row => row.name,
+        name: 'Author',
+        selector: row => row.author
     },
     {
-        name: '# Commits',
-        selector: row => row.commits,
+        name: 'Title',
+        selector: row => row.title
+    },
+    {
+        name: 'Description',
+        selector: row => row.body
 
     },
+    {
+        name: 'Status',
+        selector: row => row.state
+    },
+    {
+        name: 'Close',
+        button: true,
+        cell: row => <ActionComponent row={row} onClick={handleClick}>Action</ActionComponent>,
+    }
 ];
 
 const data = [
     {
         id: 1,
-        name: 'Beetlejuice',
-        commits: '1988',
+        title: 'Beetlejuice',
+        author: 'author',
+        body: '1988',
+        state: 'open'
     },
     {
         id: 2,
-        name: 'Ghostbusters',
-        commits: '1984',
+        title: 'My Second Pull request',
+        author: 'author',
+        body: '1988',
+        state: 'open'
     },
 ]
 
+const ActionComponent = ({  row, onClick  }) => {
+    const clickHandler = () => onClick(row);   
+  
+   return (<Button onClick={clickHandler}>Close</Button>);
+  };
 
-const handleClick = (row, event) => {
-    console.log(event.view);
+
+const handleClick = (row) => {
+    console.log(row);
+}
+const newHandler = (event) => {
+    console.log('new element', event);
 }
 const render = () => {
-    
+    const actionsMemo = <Button onClick={newHandler}> New Pull Request </Button>
+
     return (
         <>
             <h1 className="pull-requests-title"> Pull Requests </h1>
             <DataTable
-                onRowClicked={handleClick}
-                pointerOnHover={true}
                 columns={columns}
                 data={data}
+                actions={actionsMemo}
             />
         </>
     )

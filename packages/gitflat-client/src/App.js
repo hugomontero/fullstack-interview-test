@@ -5,6 +5,7 @@ import Branches from './components/branches/branches';
 import Commits from './components/commits/commits';
 import PullRequests from './components/pull-requests/pull-requests';
 import { BrowserRouter as Router, Route,  Routes } from 'react-router-dom';
+import NewPullRequest from './components/new-pull-request/new-pull-request';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route exact path="/branches" caseSensitive={false} element={<Branches />} />
             <Route exact path="/branches/:name/commits" caseSensitive={false} element={<Commits />} />
             <Route exact path="/pull-requests" caseSensitive={false} element={<PullRequests />} />
+            <Route exact path="/pull-requests/new" caseSensitive={false} element={<NewPullRequest />} />
           </Routes>
       
         </Router>
