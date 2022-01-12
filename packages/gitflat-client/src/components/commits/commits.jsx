@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import DataTable from 'react-data-table-component';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import './commits.css'
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/gitflat';
 
 const style = {
     position: 'absolute',
@@ -20,49 +25,64 @@ const style = {
 const columns = [
     {
         name: 'Commit Message',
-        selector: row => row.name,
+        selector: row => row.commit.message,
     },
     {
         name: 'Timestamp',
-        selector: row => row.timeStamp
+        selector: row => row.commit.author.date
     },
     {
         name: 'Author',
-        selector: row => row.author,
+        selector: row => row.commit.author.name,
 
     },
 ];
 
-const data = [
-    {
-        id: 1,
-        name: 'Beetlejuice',
-        timeStamp: new Date().toISOString(),
-        filesChanged: 20,
-        author: '1988',
-    },
-    {
-        id: 2,
-        name: 'Ghostbusters',
-        timeStamp: new Date().toISOString(),
-        filesChanged: 20,
-        author: '1984',
-    },
-]
 
+const fetchData = async (url, setData, setError) => {
+    try {
+      const response = await fetch(url);
+      if(response.status === 200 ) {
+        const json = await response.json();
+        setData(json);
+      } else {
+        setError(response.statusText);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+    return null;
+  };
 
 
     
 const Commits = () =>{
     const [open, setOpen] = React.useState(false);
+    const [commits, setCommits] = React.useState([]);
+    const [error, setError] = useState(null);
+    const {name: branchName} = useParams();
+    useEffect(() => {
+        const url = `${API_URL}/branches/${branchName}/commits`
+        fetchData(url, setCommits, setError);
+    }, []);
     const [currentRow, setCurrentRow] = React.useState({
-        name: '', 
+        message: '', 
         filesChanged: 0,
         timeStamp: new Date().toISOString(),
         author: ''
     });
-    const handleOpen = (row) => { 
-        setCurrentRow(row);
+
+    const handleOpen = async(row) => { 
+        const singleCommitResponse = await fetch(`${API_URL}/branches/${branchName}/commits/${row.sha}`);
+        const singleCommit = await singleCommitResponse.json();
+        
+        const currentCommit = {
+            message: row.commit.message,
+            timeStamp: row.commit.author.date,
+            author: `${row.commit.author.name}:${row.commit.author.email}`,
+            filesChanged: singleCommit?.files?.length
+        }
+        setCurrentRow(currentCommit);
         setOpen(true) 
     };
     const handleClose = () => setOpen(false);
@@ -72,11 +92,17 @@ const Commits = () =>{
     return (
         <>
             <h1 className="commit-title"> Commits </h1>
+            {error &&
+                <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {error}
+                </Alert>
+            }
             <DataTable
                 onRowClicked={handleOpen}
                 pointerOnHover={true}
                 columns={columns}
-                data={data}
+                data={commits}
             />
             <Modal
                 open={open}
@@ -90,7 +116,7 @@ const Commits = () =>{
                             Commit Details
                         </h1>
                         <h2>Message:</h2>
-                        <p>{currentRow.name}</p>
+                        <p>{currentRow.message}</p>
                         <hr></hr>
                         <h2>Timestamp</h2>
                         <p>{currentRow.timeStamp}</p>
