@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+
+
 
 import './branches.css'
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/gitflat';
 
 const columns = [
     {
@@ -9,34 +14,53 @@ const columns = [
         selector: row => row.name,
     },
     {
-        name: '# Commits',
-        selector: row => row.commits,
+        name: 'Commit sha',
+        selector: row => row.commit.sha,
 
     },
 ];
 
-const data = [
-    {
-        id: 1,
-        name: 'Beetlejuice',
-        commits: '1988',
-    },
-    {
-        id: 2,
-        name: 'Ghostbusters',
-        commits: '1984',
-    },
-]
-
-
 const handleClick = (row, event) => {
     event.view.window.location = `/branches/${row.name}/commits`;
 }
-const render = () => {
+
+const fetchData = async (url, setData, setError) => {
+    try {
+      const response = await fetch(url);
+      if(response.status === 200 ) {
+        const json = await response.json();
+        setData(json);
+      } else {
+        setError(response.statusText);
+      }
+      return;
+    } catch (error) {
+    
+      setError(error.message);
+    }
+  };
+
+
+    
+
+const Branches = () =>{
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const url = `${API_URL}/branches/`
+        fetchData(url, setData, setError);
+    }, []);
     
     return (
         <>
             <h1 className="branch-title"> Branches </h1>
+            {error &&
+                <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {error}
+                </Alert>
+            }
+            
             <DataTable
                 onRowClicked={handleClick}
                 pointerOnHover={true}
@@ -44,12 +68,7 @@ const render = () => {
                 data={data}
             />
         </>
-    )
-}
-const Branches = () =>{
-    
-    return render();
-   
+    );   
 }
 
 export default Branches;
