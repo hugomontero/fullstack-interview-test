@@ -55,11 +55,11 @@ const ActionComponent = ({  row, onClick  }) => {
 const handleClick = (row) => {
     console.log(row);
 }
-const newHandler = (event) => {
-    console.log('new element', event);
+const newPullRequestHandler = (event) => {
+    event.view.window.location = `/pull-requests/new`;
 }
 const render = () => {
-    const actionsMemo = <Button onClick={newHandler}> New Pull Request </Button>
+    const actionsMemo = <Button onClick={newPullRequestHandler}> New Pull Request </Button>
 
     return (
         <>

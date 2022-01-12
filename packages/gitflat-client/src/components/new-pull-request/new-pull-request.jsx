@@ -5,23 +5,6 @@ import Button from '@mui/material/Button';
 import './new-pull-request.css';
 
 
-const data = [
-    {
-        id: 1,
-        name: 'Beetlejuice',
-        timeStamp: new Date().toISOString(),
-        filesChanged: 20,
-        author: '1988',
-    },
-    {
-        id: 2,
-        name: 'Ghostbusters',
-        timeStamp: new Date().toISOString(),
-        filesChanged: 20,
-        author: '1984',
-    },
-]
-
 const branches = [
     {
       value: 'main',

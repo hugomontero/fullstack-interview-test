@@ -30,7 +30,6 @@ const data = [
 
 
 const handleClick = (row, event) => {
-    console.log(event.view);
     event.view.window.location = `/branches/${row.name}/commits`;
 }
 const render = () => {
