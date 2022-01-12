@@ -1,0 +1,20 @@
+.commit-title {
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.commit-detail h1{
+    padding: 20px;
+
+}
+
+.commit-detail h2{
+    padding: 20px;
+}
+
+.commit-detail p {
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+}

@@ -6,8 +6,8 @@ class NavBar extends Component{
         return(   
             <section className='navBar'>
                 <ul>
-                <li><a href="#branches">Branches</a></li>
-                <li><a href="#pull-requests">Pull Requests</a></li>
+                <li><a href="/branches">Branches</a></li>
+                <li><a href="/pull-requests">Pull Requests</a></li>
                 </ul>
             </section>
         );
