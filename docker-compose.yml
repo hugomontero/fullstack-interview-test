@@ -4,12 +4,12 @@ services:
   api:
     build: ./packages/gitflat-api
     ports:
-      - "4000:4000"
+      - "${PORT_API}:4000"
     environment:
       - GIT_TOKEN=${GIT_TOKEN}
   client:
     build: ./packages/gitflat-client
     ports:
-      - "8080:3000"
+      - "${PORT_CLIENT}:3000"
     environment:
       - REACT_APP_API_URL=http://localhost:4000/gitflat
