@@ -7,30 +7,6 @@ import './pull-requests.css'
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/gitflat';
 
 
-const columns = [
-    {
-        name: 'Author',
-        selector: row => row.user.login
-    },
-    {
-        name: 'Title',
-        selector: row => row.title
-    },
-    {
-        name: 'Description',
-        selector: row => row.body
-
-    },
-    {
-        name: 'Status',
-        selector: row => row.state
-    },
-    {
-        name: 'Close',
-        button: true,
-        cell: row => row.state === 'open'  && <ActionComponent row={row} onClick={closePullRequest}>Action</ActionComponent>,
-    }
-];
 
 const fetchData = async (url, setData, setError) => {
     try {
@@ -47,24 +23,11 @@ const fetchData = async (url, setData, setError) => {
     return null;
   };
 
-const closePullRequest = async(row) => {
-    try{
-        const url = `${API_URL}/pulls/${row.number}/close`
-        const requestOptions = {
-            method: 'PUT'
-        }
-        await fetch(url, requestOptions);
-        return true;
-    }catch(error) {
-        console.log(error);
-    }
-}
-
-const ActionComponent = ({  row, onClick  }) => {
-    const clickHandler = () => onClick(row);   
+const ActionComponent = ({  row, onClick, setPullRequests, setError  }) => {
+    const clickHandler = () => onClick(row, setPullRequests, setError);   
   
    return (<Button onClick={clickHandler}>Close</Button>);
-  };
+};
 
 
 
@@ -73,6 +36,31 @@ const newPullRequestHandler = (event) => {
 }
 
 const PullRequests = () =>{
+
+    const columns = [
+        {
+            name: 'Author',
+            selector: row => row.user.login
+        },
+        {
+            name: 'Title',
+            selector: row => row.title
+        },
+        {
+            name: 'Description',
+            selector: row => row.body
+
+        },
+        {
+            name: 'Status',
+            selector: row => row.state
+        },
+        {
+            name: 'Close',
+            button: true,
+            cell: row => row.state === 'open'  && <ActionComponent row={row} setPullRequests={setPullRequests} setError={setError} onClick={closePullRequest}>Action</ActionComponent>,
+        }
+    ];
     const [pullRequests, setPullRequests] = React.useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -82,7 +70,21 @@ const PullRequests = () =>{
     }, []);
    
    
-    
+    const closePullRequest = async(row) => {
+        try{
+            const url = `${API_URL}/pulls/${row.number}/close`;
+            const requestOptions = {
+                method: 'PUT'
+            }
+            await fetch(url, requestOptions);
+            const getPullsUrl = `${API_URL}/pulls`;
+            fetchData(getPullsUrl, setPullRequests, setError); 
+            return true;
+        }catch(error) {
+            console.log(error);
+        }
+    }
+
     const actionsMemo = <Button onClick={newPullRequestHandler}> New Pull Request </Button>
 
     return (
