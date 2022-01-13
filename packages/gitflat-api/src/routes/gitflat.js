@@ -92,6 +92,7 @@ router.put('/pulls/:pullNumber/close', async(req, res) => {
         const pullRequest = await pullRequestsService.closePullRequest(pullNumber);
         res.send(pullRequest);
     }catch(error) {
+        console.log(error);
         res.status(error.response?.status || 500).send(error.response?.data);
     }
 });

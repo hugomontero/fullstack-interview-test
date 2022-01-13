@@ -20,7 +20,7 @@ const PullRequestsRepository = (axiosInstance) => {
         const pullRequestOptions = {
             state: 'closed'
         }
-        const closeResponse = await axiosInstance.pacth(`/${owner}/${repo}/pulls/${pullNumber}`, pullRequestOptions);
+        const closeResponse = await axiosInstance.patch(`/${owner}/${repo}/pulls/${pullNumber}`, pullRequestOptions);
         return closeResponse.data;
     };
 
