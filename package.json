@@ -15,7 +15,8 @@
     "gitflat:test": "lerna run test --scope=gitflat* --stream",
     "gitflat:api:start": "lerna run start --scope=gitflat-api --stream",
     "gitflat:api:test": "lerna run test --scope=gitflat-api --stream",
-    "gitflat:client:start": "lerna run start --scope=gitflat-client --stream"
+    "gitflat:client:start": "lerna run start --scope=gitflat-client --stream",
+    "gitflat:client:test": "lerna run test --scope=gitflat-client --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
